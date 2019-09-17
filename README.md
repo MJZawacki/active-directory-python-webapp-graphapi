@@ -143,6 +143,13 @@ Open the config.py file to configure the project
   ```
 Follow the sign-in process to complete the logging.
 
+### Step 5. Run on App Service
+
+1. Build docker container
+2. Create up App Service for linux container
+3. Add ```ENVIRONMENT=PROD``` application setting
+4. push container to registry (e.g. Azure Container Registry)
+5. Configure App Service to use new container
 ## About the code
 
 The code acquiring a token is located in `app.py` file.
