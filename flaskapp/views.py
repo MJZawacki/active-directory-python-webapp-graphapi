@@ -3,22 +3,30 @@ import flask
 import uuid
 import requests
 import config
+import os
 
-app = flask.Flask(__name__)
+from . import app
 app.debug = True
 app.secret_key = 'development'
 
+env = os.environ['ENVIRONMENT']
 PORT = 5000  # A flask app by default runs on PORT 5000
+if (env == 'PROD'):
+    sitename = os.environ['WEBSITE_SITE_NAME']
+    base_url = 'https://{}.azurewebsites.net'.format(sitename)
+else:
+    base_url = 'http://localhost:{}'.format(PORT)
+
 AUTHORITY_URL = config.AUTHORITY_HOST_URL + '/' + config.TENANT
-REDIRECT_URI = 'http://localhost:{}/getAToken'.format(PORT)
-TEMPLATE_AUTHZ_URL = ('https://login.microsoftonline.com/{}/oauth2/authorize?' +
+REDIRECT_URI = '{}/getAToken'.format(base_url)
+TEMPLATE_AUTHZ_URL = ('http://login.microsoftonline.com/{}/oauth2/authorize?' +
                       'response_type=code&client_id={}&redirect_uri={}&' +
                       'state={}&resource={}')
 
 
 @app.route("/")
 def main():
-    login_url = 'http://localhost:{}/login'.format(PORT)
+    login_url = '{}/login'.format(base_url)
     resp = flask.Response(status=307)
     resp.headers['location'] = login_url
     return resp
@@ -68,5 +76,3 @@ def graphcall():
     return flask.render_template('display_graph_info.html', graph_data=graph_data)
 
 
-if __name__ == "__main__":
-    app.run()

@@ -19,6 +19,7 @@ This sample demonstrates how to build a Python (Flask) web application that auth
 
 1. The app uses the Active Directory Authentication Library (ADAL) to acquire a JWT access token for the Microsoft Graph.  
 2. The app then uses the access token to get data about the user from the Microsoft Graph. 
+3. Optionally, use the Dockerfile to build a container and host in Azure App Service
 
 ![Overview](./ReadmeFiles/topology.png)
 
