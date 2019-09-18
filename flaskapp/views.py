@@ -58,10 +58,15 @@ def main_logic():
                                                                         config.CLIENT_ID, config.CLIENT_SECRET)
     # It is recommended to save this to a database when using a production app.
     flask.session['access_token'] = token_response['accessToken']
+    flask.session['full_token'] = token_response
+    return flask.redirect('/tokendetails')
 
-    return flask.redirect('/graphcall')
-
-
+@app.route('/tokendetails')
+def tokendetails():
+    if 'access_token' not in flask.session:
+        return flask.redirect(flask.url_for('login'))
+    return flask.render_template('display_token_info.html', token_data=flask.session['full_token'])
+    
 @app.route('/graphcall')
 def graphcall():
     if 'access_token' not in flask.session:
