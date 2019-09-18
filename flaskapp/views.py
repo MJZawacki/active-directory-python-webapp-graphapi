@@ -9,9 +9,9 @@ from . import app
 app.debug = True
 app.secret_key = 'development'
 
-env = os.environ['ENVIRONMENT']
+env = os.environ['FLASK_ENV']
 PORT = 5000  # A flask app by default runs on PORT 5000
-if (env == 'PROD'):
+if (env == 'production'):
     sitename = os.environ['WEBSITE_SITE_NAME']
     base_url = 'https://{}.azurewebsites.net'.format(sitename)
 else:

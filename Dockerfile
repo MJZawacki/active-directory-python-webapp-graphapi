@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -U pip
 WORKDIR /flaskapp
 ENV UWSGI_INI uwsgi.ini
 ENV LISTEN_PORT=5000
-ENV ENVIRONMENT=dev
+ENV FLASK_ENV=development
 EXPOSE 5000 
 ADD . /flaskapp
 RUN pip install --no-cache-dir -r ./requirements.txt
